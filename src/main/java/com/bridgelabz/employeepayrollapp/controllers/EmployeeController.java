@@ -1,22 +1,12 @@
 package com.bridgelabz.employeepayrollapp.controllers;
 
-import com.bridgelabz.employeepayrollapp.dto.PayrollDTO;
-import com.bridgelabz.employeepayrollapp.services.EmployeePayrollServices;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
-    @Autowired
-    private EmployeePayrollServices services;
 
     @GetMapping("/uc1")
     public ResponseEntity<String > getEmployee(@RequestParam(required = false, defaultValue = "Employee") String name) {
@@ -24,7 +14,27 @@ public class EmployeeController {
     }
 
     @GetMapping("/uc2/all")
-    public ResponseEntity<List<PayrollDTO>> getAllPayrollData() {
-        return services.getAll();
+    public ResponseEntity<String> getAllPayrollData() {
+        return new ResponseEntity<>("Fetching All Data : ", HttpStatus.OK);
+    }
+
+    @GetMapping("/uc2/get/{ID}")
+    public ResponseEntity<String> getSpecific(@PathVariable int id) {
+        return new ResponseEntity<>("Fetching All Data : ", HttpStatus.OK);
+    }
+
+    @PostMapping("/uc2/post")
+    public ResponseEntity<String> postData(@RequestBody Object body) {
+        return new ResponseEntity<>("Posting Data: ", HttpStatus.OK);
+    }
+
+    @PutMapping("/uc2/put/{ID}")
+    public ResponseEntity<String> updateData(@RequestBody Object body, @PathVariable String ID) {
+        return new ResponseEntity<>("Modifying Data: ", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/uc2/delete/{ID}")
+    public ResponseEntity<String> deleteData(@RequestBody Object body, @PathVariable String ID) {
+        return new ResponseEntity<>("Deleting Data: ", HttpStatus.OK);
     }
 }
