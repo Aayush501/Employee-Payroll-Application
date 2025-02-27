@@ -1,6 +1,7 @@
 package com.bridgelabz.employeepayrollapp.model;
 
 public class EmployeeModel {
+    private long ID;
     private String name;
     private double salary;
 
@@ -10,10 +11,18 @@ public class EmployeeModel {
     public void setSalary(double salary) {
         this.salary = salary;
     }
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
     public String getName() {
         return name;
     }
     public double getSalary() {
         return salary;
     }
+    public long getID() {
+        return ID;
+    }
+
 }
