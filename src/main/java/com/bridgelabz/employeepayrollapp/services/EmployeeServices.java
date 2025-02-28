@@ -2,6 +2,7 @@ package com.bridgelabz.employeepayrollapp.services;
 
 import com.bridgelabz.employeepayrollapp.dto.EmployeeDTO;
 import com.bridgelabz.employeepayrollapp.model.EmployeeModel;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,11 +10,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @Service
 public class EmployeeServices {
     private List<EmployeeModel> employees = new ArrayList<>();
 
     public String addEmployee(EmployeeDTO dto) {
+        if(dto == null) {
+            log.error("Error Occurred!!");
+            return "DTO is Null";
+        }
+
         EmployeeModel model = new EmployeeModel();
         model.setID(dto.getID());
         model.setName(dto.getName());
@@ -26,6 +33,10 @@ public class EmployeeServices {
     }
 
     public String modifyEmployee(EmployeeDTO dto) {
+        if(dto == null) {
+            log.error("Error Occurred Here!!");
+            return "DTO is Null";
+        }
         EmployeeModel model = null;
 
         for (EmployeeModel employeeModel : employees) {
