@@ -1,28 +1,12 @@
 package com.bridgelabz.employeepayrollapp.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class EmployeeDTO {
     private long ID;
     private String name;
     private double salary;
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-
-    public String getName() {
-        return name;
-    }
-    public double getSalary() {
-        return salary;
-    }
-    public long getID() {
-        return ID;
-    }
-
 }
