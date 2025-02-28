@@ -2,6 +2,7 @@ package com.bridgelabz.employeepayrollapp.controllers;
 
 import com.bridgelabz.employeepayrollapp.dto.EmployeeDTO;
 import com.bridgelabz.employeepayrollapp.services.EmployeeServices;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,13 +37,13 @@ public class EmployeeController {
     }
 
     @PostMapping("/uc2/post")
-    public ResponseEntity<String> postData(@RequestBody EmployeeDTO dto) {
+    public ResponseEntity<String> postData(@Valid @RequestBody EmployeeDTO dto) {
         log.info("posting data !!");
         return new ResponseEntity<>("Posting Data: " + services.addEmployee(dto), HttpStatus.OK);
     }
 
     @PutMapping("/uc2/put/{ID}")
-    public ResponseEntity<String> updateData(@RequestBody EmployeeDTO dto, @PathVariable String ID) {
+    public ResponseEntity<String> updateData(@Valid @RequestBody EmployeeDTO dto, @PathVariable String ID) {
         log.info("modifying data !!");
         return new ResponseEntity<>("Modifying Data: " + services.modifyEmployee(dto), HttpStatus.OK);
     }
