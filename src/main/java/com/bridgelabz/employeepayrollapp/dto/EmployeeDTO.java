@@ -14,4 +14,9 @@ public class EmployeeDTO {
     @Size(min = 2, max = 25, message = "name must be between 2 and 25 characters.")
     private String name;
     private double salary;
+    private String gender;
+    private String startDate;
+    private String note;
+    private String profilePic;
+    private String department;
 }
