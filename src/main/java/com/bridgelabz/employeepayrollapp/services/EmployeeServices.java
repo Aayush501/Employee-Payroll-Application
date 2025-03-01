@@ -1,6 +1,7 @@
 package com.bridgelabz.employeepayrollapp.services;
 
 import com.bridgelabz.employeepayrollapp.dto.EmployeeDTO;
+import com.bridgelabz.employeepayrollapp.exception.EmployeeNotFound;
 import com.bridgelabz.employeepayrollapp.model.EmployeeModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -53,5 +54,14 @@ public class EmployeeServices {
 
         String [] modelObject = {Long.toString(model.getID()), model.getName(), Double.toString(model.getSalary())};
         return Arrays.toString(modelObject);
+    }
+
+    public String getSpecificData(int id) {
+        for (EmployeeModel model : employees) {
+            if (model.getID()==id) {
+                return "Employee Name: " + model.getName() + "\nEmployee Salary: " + model.getSalary();
+            }
+        }
+        throw new EmployeeNotFound();
     }
 }

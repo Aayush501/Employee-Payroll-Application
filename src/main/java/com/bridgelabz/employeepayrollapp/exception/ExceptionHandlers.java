@@ -12,4 +12,9 @@ public class ExceptionHandlers {
     public ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException m) {
         return new ResponseEntity<>("Values you have entered, are not valid !!! Please Try Again !!!", HttpStatus.NOT_ACCEPTABLE);
     }
+
+    @ExceptionHandler(EmployeeNotFound.class)
+    public ResponseEntity<String> handleEmployeeNotFoundException(EmployeeNotFound e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }

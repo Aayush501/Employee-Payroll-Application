@@ -33,7 +33,7 @@ public class EmployeeController {
     public ResponseEntity<String> getSpecific(@PathVariable int id) {
         log.info("Fetching specific data!!");
         log.warn("Make Sure Your Path Variable Is Correct !!");
-        return new ResponseEntity<>("Fetching All Data : ", HttpStatus.OK);
+        return new ResponseEntity<>("Fetching Specific Data : " + services.getSpecificData(id), HttpStatus.OK);
     }
 
     @PostMapping("/uc2/post")
