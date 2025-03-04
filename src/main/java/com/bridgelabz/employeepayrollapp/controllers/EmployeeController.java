@@ -1,21 +1,27 @@
 package com.bridgelabz.employeepayrollapp.controllers;
 
+
 import com.bridgelabz.employeepayrollapp.dto.EmployeeDTO;
+import com.bridgelabz.employeepayrollapp.exception.EmployeeNotFound;
 import com.bridgelabz.employeepayrollapp.services.EmployeeServices;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
+@Validated
 @RequestMapping("/employee")
 public class EmployeeController {
 
     @Autowired
-    private EmployeeServices services;
+    private EmployeeServices employeeService;
 
     @GetMapping("/uc1")
     public ResponseEntity<String > getEmployee(@RequestParam(required = false, defaultValue = "Employee") String name) {
@@ -24,33 +30,54 @@ public class EmployeeController {
     }
 
     @GetMapping("/uc2/all")
-    public ResponseEntity<String> getAllPayrollData() {
-        log.info("Fetching All Data And Responding!");
-        return new ResponseEntity<>("Fetching All Data : ", HttpStatus.OK);
+    public ResponseEntity<List<String>> getAllPayrollData(){
+        // print all employees name
+        log.info("All employees are printed");
+        return new ResponseEntity<>(employeeService.getAllEmployee() , HttpStatus.OK);
     }
 
     @GetMapping("/uc2/get/{ID}")
-    public ResponseEntity<String> getSpecific(@PathVariable int id) {
-        log.info("Fetching specific data!!");
-        log.warn("Make Sure Your Path Variable Is Correct !!");
-        return new ResponseEntity<>("Fetching Specific Data : " + services.getSpecificData(id), HttpStatus.OK);
+    public ResponseEntity<String> getSpecific(@PathVariable Long id) throws EmployeeNotFound {
+        // searching in list if the id is present in tha list
+        String name = employeeService.getEmployee(id);
+
+        // return name of the employee if exist in list
+
+        log.info("Employee with name {} is printed", name);
+        return new ResponseEntity<>("Searched for employee : " + name, HttpStatus.OK);
+
     }
 
+    // adding new employee
     @PostMapping("/uc2/post")
-    public ResponseEntity<String> postData(@Valid @RequestBody EmployeeDTO dto) {
-        log.info("posting data !!");
-        return new ResponseEntity<>("Posting Data: " + services.addEmployee(dto), HttpStatus.OK);
+    public ResponseEntity<String> postData(@Valid @RequestBody EmployeeDTO employee){
+        // print name of added employee
+        log.info("{} has been added to the list", employee.getName());
+        return new ResponseEntity<>("Employee created : " + employeeService.addEmployee(employee), HttpStatus.CREATED);
     }
 
     @PutMapping("/uc2/put/{ID}")
-    public ResponseEntity<String> updateData(@Valid @RequestBody EmployeeDTO dto, @PathVariable String ID) {
-        log.info("modifying data !!");
-        return new ResponseEntity<>("Modifying Data: " + services.modifyEmployee(dto), HttpStatus.OK);
+    public ResponseEntity<String> updateData(@PathVariable Long id,
+                                              @Valid @RequestBody EmployeeDTO employee) throws EmployeeNotFound {
+
+        // update employee given by data given by user
+        String name = employeeService.updateEmployee(id, employee);
+
+        // print name of employee record updated
+
+        log.info("Employee info has been updated.");
+        return new ResponseEntity<>("Updated employee: " + name, HttpStatus.OK);
     }
 
     @DeleteMapping("/uc2/delete/{ID}")
-    public ResponseEntity<String> deleteData(@RequestBody Object body, @PathVariable String ID) {
-        log.info("deleting data !!");
-        return new ResponseEntity<>("Deleting Data: ", HttpStatus.OK);
+    public ResponseEntity<String> deleteData(@PathVariable Long id) throws EmployeeNotFound {
+        // deleting the employee
+        String name = employeeService.deleteEmployee(id);
+
+        // print name of employee record deleted
+
+        log.info("Employee data has been deleted.");
+        return new ResponseEntity<>("Deleted employee : " + name, HttpStatus.OK);
+
     }
 }

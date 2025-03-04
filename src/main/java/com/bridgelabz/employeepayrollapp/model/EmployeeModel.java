@@ -1,17 +1,29 @@
 package com.bridgelabz.employeepayrollapp.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Setter
+import java.time.LocalDate;
+
+// using getter setter annotation to access getter and setter for the private attribute
 @Getter
+@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table (name = "Employee")
 public class EmployeeModel {
-    private long ID;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private double salary;
     private String gender;
-    private String startDate;
+    private LocalDate startDate;
     private String note;
     private String profilePic;
     private String department;
+
 }
